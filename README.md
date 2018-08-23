@@ -3,25 +3,31 @@
 json-server is great for stub server usage
 but in my opinion there where some caveat that i tried to solve in this package
 
-### so what this package gives you
+## so what this package gives you
+
 - [x] **splitting to static files -**   json-server can serve only single file but in medium/large applications it not ideal, by using this package you can split your json object to files
 - [x] **dynamic generation -**  with json server you can generate the whole file
   now you can create multiple generated objects decoupled each other and even combine
   static and generated files
 
 ## Example
-full example can be found here https://github.com/maty21/json-server-extension-example
+
+full example can be found [here](https://github.com/maty21/json-server-extension-example)
+
 ## Install
-`` npm i json-server-extension ``
-### init example
-```js
+
+    npm i json-server-extension
+
+## init example
+
+```javascript
 const jsonServer = require('json-server');
 const _jsonExtender = require('./jsonExtender');
 
-//options:
-//fullPath:fullpath for the combined object
-//generatedPath:the path where the generated files will be found
-//staticPath:the path where the static files will be found
+// options:
+// filePath: filePath for the combined object
+// generatedPath: the path where the generated files will be found
+// staticPath: the path where the static files will be found
 const jsonExtender = new _jsonExtender({filePath:'./db_extends.json',
                                         generatedPath:'./generated',
                                         staticPath:'./static'})
@@ -43,9 +49,10 @@ jsonExtender.generate().then((data)=>{
 
 });
 ```
+
 ### generator Example
 
-```js
+```javascript
 const amount = 100;
  const func =next =>create => {
     const path = `feed/feedList.json`;
@@ -72,33 +79,34 @@ const amount = 100;
 module.exports = func;
 ```
 
-
 ## api
 
-#### constructor
-``constructor({filePath:'string',generatedPath:'string, staticPath:'string'}) ``
-- ``fullPath``- fullpath for the combined object
-- ``generatedPath``- the path where the generated files will be found ``default
-: './generated'``
-- ``staticPath``- the path where the static files will be found  ``default
-: './static'``
+### constructor
 
-#### register
-``register('path name') / register([...generator scripts]) ``
+    constructor({filePath:'string',generatedPath:'string, staticPath:'string'})
+- ``filePath``- A path to the file aggregated from specified files.
+- ``generatedPath``- the path where the generated files will be found ``default: './generated'``
+- ``staticPath``- the path where the static files will be found  ``default: './static'``
+
+### register
+
+    register('path name') / register([...generator scripts])
 - ``register('path name')`` - a path where the generators scripts will be found the package will insatiate the scripts automatically
 - ``register([...generator scripts])`` -array of your generators after requiring them manually
 
-#### generate
-``generate(isRun[default:true]) return promise``
+### generate
+
+    generate(isRun[default:true])
 - ``isRun`` - there is ability to not generate the db.json each time good when you want to save the state after you close the process the promise will recive the same data so you will not have to change the code
 - ``promise``
   - ``resolve`` -{files:array of combined files, filePath:the combined file path }
   - ``reject``- error
+- return promise
 
 ### generator
 
-``` const func= next =>create => {}``` - the generator should be initiated as follows first you will have to call for create this is sync function and the for next
+```const func= next =>create => {}``` - the generator should be initiated as follows first you will have to call for create this is sync function and the for next
 - ``create({data: {feed: generatedObject}, path: path})``
-    - ``data`` - the generated data where the name of the property will be the routing name in this case ``feed``
-    - ``path`` - a relative path under the generated path that you set in the constructor where you wish to put the output
+- ``data`` - the generated data where the name of the property will be the routing name in this case ``feed``
+- ``path`` - a relative path under the generated path that you set in the constructor where you wish to put the output
 - ``next(create)`` - just pass the create function there so it's reference will be passed  in the pipeline
