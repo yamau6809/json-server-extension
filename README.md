@@ -16,7 +16,7 @@ full example can be found [here](https://github.com/maty21/json-server-extension
 
 ## Install
 
-    npm i json-server-extension
+    npm install json-server-extension
 
 ## init example
 
