@@ -15,6 +15,9 @@
   ],
   "author": "maty zisserman",
   "license": "MIT",
+  "bin": {
+    "json-server-extension": "bin/cli.js"
+  },
   "dependencies": {
     "colors": "^1.1.2",
     "fs-extra": "^1.0.0",
